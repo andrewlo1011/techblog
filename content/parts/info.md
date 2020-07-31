@@ -2,4 +2,5 @@
 title: info
 ---
 
-I am a front-end web developer. I used to be a web designer too, but now I concentrate on the code.
+"Great things are not done by impulse, but by a series of small things brought together." 
+~Vincent Van Gogh
