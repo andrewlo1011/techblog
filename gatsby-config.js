@@ -43,6 +43,9 @@ module.exports = {
     },
     facebook: {
       appId: process.env.FB_APP_ID ? process.env.FB_APP_ID : ""
+    },
+    disqus: {
+      shortName: process.env.DISQUS_ID ? process.env.DISQUS_ID : ""
     }
   },
   plugins: [

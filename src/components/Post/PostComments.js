@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import injectSheet from "react-jss";
-import FacebookProvider, { Comments } from "react-facebook";
+//import FacebookProvider, { Comments } from "react-facebook";
+import ReactDisqusComments from "react-disqus-comments";
+
 require("core-js/fn/array/find");
 
 import config from "../../../content/meta/config";
@@ -14,6 +16,22 @@ const styles = theme => ({
   }
 });
 
+const PostComments = props => {
+  const { classes, slug, post, disqus} = props;
+
+  return (
+    <div id="post-comments" className={classes.postComments}>
+          <ReactDisqusComments
+            shortname={disqus.shortName}
+            identifier={post.title}
+            title={post.title}
+            url={`${config.siteUrl}${slug}`}
+            category_id={post.category_id}
+          />
+    </div>
+  );
+};
+/*
 const PostComments = props => {
   const { classes, slug, facebook } = props;
 
@@ -29,6 +47,8 @@ const PostComments = props => {
     </div>
   );
 };
+*/
+
 
 PostComments.propTypes = {
   classes: PropTypes.object.isRequired,
