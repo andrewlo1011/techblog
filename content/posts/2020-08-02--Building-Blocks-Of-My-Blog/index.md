@@ -7,12 +7,12 @@ cover: dan-burton-l6jWD4AZIf0-unsplash.jpg
 
 ## Buildling blocks of [Drew.vip](https://Drew.vip)
 
-The followng is the building blocks of my blog:
+The followings are the building blocks of my blog:
 
 
 1. [Netlify.com](https://www.netlify.com) 
 
-I use Netlify.com to deploy and host the blog. It gives seamless integration with Github and provides auto build and deployment capability. On the other hand, it also provides [CDN](https://www.netlify.com/products/edge/) feature to cache my site in edge locations. It also offers a free [SSL](https://docs.netlify.com/domains-https/https-ssl/) auto-renewable certificate. 
+I use Netlify.com to deploy and host the blog. It gives seamless integration with Github and provides auto build and deployment capability. On the other hand, it also provides [CDN](https://www.netlify.com/products/edge/) feature to cache my site in edge locations. In addition to CDN, It offers a free auto-renewable [SSL](https://docs.netlify.com/domains-https/https-ssl/) certificate. 
 
 2. [Gatsby.js](https://www.gatsbyjs.org/)
 
