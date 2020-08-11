@@ -66,7 +66,7 @@ class ContactForm extends React.Component {
     })
       .then(() => {
         console.log("Form submission success");
-        navigateTo("/success");
+        //navigateTo("/success");
       })
       .catch(error => {
         console.error("Form submission error:", error);

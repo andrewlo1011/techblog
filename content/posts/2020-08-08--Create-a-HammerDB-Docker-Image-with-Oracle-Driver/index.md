@@ -9,7 +9,7 @@ cover: docker logo.jpg
 To create HammerDB docker image, we need to install docker first. As there are many documents on the Internet to describe how to install docker, I skip the installation step in this blog post.
 
 ## Files to build the images
-I created 2 files to build the image: 
+I created 3 files to build the image: 
 
 ### Dockerfile
 
@@ -19,13 +19,20 @@ We provide Dockerfile to docker to build the docker image. There are few existin
 - Install curl, unzip and libaio library
 - Download HammerDB 3.3 and install
 - Download Oracle instant client 19.3 and install
-- Copy load.tcl and run hammerdbcli and call the script
+- Copy load.tcl, load.sh to the image
+- Run load.sh 
 
 ### load.tcl 
 
 - This is a HammerDB script to run timed TPC-C workload with 1, 2 and 3 virtual users. Schema and warehouse build is not included in this script. 
 
-P.S. Username and Password are hardcoded in the script.
+
+### load.sh
+
+- This is a shell script called by the container, which replace the database user, password and easy connect string with the environment variables passed from the caller. It starts the hammerdbcli and call load.tcl
+
+
+P.S. Oracle Easy Connect String, Username and Password are defined in environment variables which will be passed from the caller
 
 
 __Dockerfile__
@@ -63,14 +70,16 @@ ENV LD_LIBRARY_PATH=/instantclient_19_8
 ENV ORACLE_LIBRARY=/instantclient_19_8/libclntsh.so
 ENV PATH=$LD_LIBRARY_PATH:$PATH
 
-ENV ORACLE_EZCONNECT=192.168.0.172:1521/orcl
-
 COPY ./data/load.tcl /hammerdb
-RUN sed -i -e "s#ORACLE_EZCONNECT#$ORACLE_EZCONNECT#g" /hammerdb/load.tcl 
+COPY ./data/load.sh /
+RUN chmod u+x load.sh
 
-WORKDIR /hammerdb
+ENV ORACLE_EZCONNECT=
+ENV SYSTEM_USER=
+ENV SYSTEM_PASSWORD=
 
-CMD ["./hammerdbcli","auto","load.tcl"]
+CMD ["./load.sh"]
+
 ```
 
 
@@ -83,8 +92,8 @@ dbset db ora
 print dict
 dbset db ora
 dbset bm TPC-C
-diset connection system_user system
-diset connection system_password oracle
+diset connection system_user SYSTEM_USER 
+diset connection system_password SYSTEM_PASSWORD
 diset connection instance ORACLE_EZCONNECT 
 diset tpcc ora_driver timed
 diset tpcc timeprofile true
@@ -114,7 +123,7 @@ sleep 500
 
 ### Round 3
 vudestroy
-vuset vu 1
+vuset vu 3
 print vuconf
 
 vucreate
@@ -123,28 +132,45 @@ vurun
 sleep 500
 ```
 
+__load.sh__
+
+```
+#!/bin/bash
+echo $ORACLE_EZCONNECT
+echo $SYSTEM_USER
+echo $SYSTEM_PASSWORD
+
+sed -i -e "s#ORACLE_EZCONNECT#$ORACLE_EZCONNECT#g" /hammerdb/load.tcl 
+sed -i -e "s#SYSTEM_PASSWORD#$SYSTEM_PASSWORD#g" /hammerdb/load.tcl 
+sed -i -e "s#SYSTEM_USER#$SYSTEM_USER#g" /hammerdb/load.tcl 
+
+cd /hammerdb
+./hammerdbcli auto load.tcl
+```
+
+
 ## Build the docker image
 docker build --tag=hammerdb  ./
 
-![](./01_build_the_image.jpg)
-![](./02_build_the_image.jpg)
-![](./03_build_the_image.jpg)
+![](./01_build_the_image_c.jpg)
+![](./02_build_the_image_c.jpg)
+![](./03_build_the_image_c.jpg)
 
 ## Run the docker image
 
-Run the docker image with buid-in load.tcl script:
+Run the docker image with load.sh script:
 
 ```
-docker run -it hammerdb
+docker run -it --env SYSTEM_USER=system --env ORACLE_EZCONNECT=192.168.0.172:1521/orcl --env SYSTEM_PASSWORD=oracle hammerdb
 ```
 
-![](./04_run_the_image.jpg)
-![](./05_run_the_image.jpg)
+![](./04_run_the_image_b.jpg)
+![](./05_run_the_image_b.jpg)
 
 Run the docker image with bash and call hammdbcli:
 
 ```
-docker run -it hammerdb /bin/bash
+docker run -it --rm hammerdb /bin/bash
 ```
 
-![](./06_run_the_image_bash.jpg)
+![](./06_run_the_image_bash_b.jpg)
