@@ -1,0 +1,53 @@
+CREATE DIRECTORY DATA_PUMP_DIR_1 AS '/u01/datapump';
+
+
+DECLARE
+hdnl NUMBER;
+BEGIN
+hdnl := DBMS_DATAPUMP.OPEN( operation => 'EXPORT', job_mode => 'SCHEMA', job_name=>null);
+DBMS_DATAPUMP.ADD_FILE( handle => hdnl, filename => 'tpcc.dmp', directory => 'DATA_PUMP_DIR_1', filetype => dbms_datapump.ku$_file_type_dump_file);
+DBMS_DATAPUMP.ADD_FILE( handle => hdnl, filename => 'tpcc_exp.log', directory => 'DATA_PUMP_DIR_1', filetype => dbms_datapump.ku$_file_type_log_file);
+DBMS_DATAPUMP.METADATA_FILTER(hdnl,'SCHEMA_EXPR',' IN (''TPCC'')');
+DBMS_DATAPUMP.START_JOB(hdnl);
+END;
+/    
+
+Du3Kd9eC5Iweqiug4pc8
+
+
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/oracle-s3-integration.html#oracle-s3-integration.preparing
+
+SELECT rdsadmin.rdsadmin_s3_tasks.download_from_s3(
+      p_bucket_name    =>  'hammerdb-expdp',       
+      p_directory_name =>  'DATA_PUMP_DIR') 
+   AS TASK_ID FROM DUAL;  
+   
+   
+
+SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('BDUMP','dbtask-1597064157117-203.log'));                
+            
+
+
+CREATE TABLESPACE TPCCTAB;
+
+DECLARE
+hdnl NUMBER;
+BEGIN
+hdnl := DBMS_DATAPUMP.OPEN( operation => 'IMPORT', job_mode => 'SCHEMA', job_name=>null);
+DBMS_DATAPUMP.ADD_FILE( handle => hdnl, filename => 'tpcc.dmp', directory => 'DATA_PUMP_DIR', filetype => dbms_datapump.ku$_file_type_dump_file);
+DBMS_DATAPUMP.ADD_FILE( handle => hdnl, filename => 'tpcc_imp.log', directory => 'DATA_PUMP_DIR', filetype => dbms_datapump.ku$_file_type_log_file);
+DBMS_DATAPUMP.METADATA_FILTER(hdnl,'SCHEMA_EXPR','IN (''TPCC'')');
+DBMS_DATAPUMP.START_JOB(hdnl);
+END;
+/   
+
+
+select * from DBA_DATAPUMP_JOBS;
+select * from DBA_DATAPUMP_SESSIONS;
+
+
+SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('DATA_PUMP_DIR','tpcc_imp.log'));                
+            
+    
+            
+
