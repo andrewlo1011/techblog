@@ -1,0 +1,153 @@
+====
+Baseline
+====
+Show parameter sga_target;
+Show parameter pga;
+Show parameter cpu_count;
+
+select count(1) from unified_audit_trail;
+
+column file_name format a60
+SELECT df.tablespace_name,
+       df.file_name,
+       df.size_mb,
+       f.free_mb,
+       df.max_size_mb,
+       f.free_mb + (df.max_size_mb - df.size_mb) AS max_free_mb,
+       RPAD(' '|| RPAD('X',ROUND((df.max_size_mb-(f.free_mb + (df.max_size_mb - df.size_mb)))/max_size_mb*10,0), 'X'),11,'-') AS used_pct
+FROM   (SELECT file_id,
+               file_name,
+               tablespace_name,
+               TRUNC(bytes/1024/1024) AS size_mb,
+               TRUNC(GREATEST(bytes,maxbytes)/1024/1024) AS max_size_mb
+        FROM   dba_data_files) df,
+       (SELECT TRUNC(SUM(bytes)/1024/1024) AS free_mb,
+               file_id
+        FROM dba_free_space
+        GROUP BY file_id) f
+WHERE  df.file_id = f.file_id (+)
+ORDER BY df.tablespace_name,
+         df.file_name;
+
+====
+Before Baseline
+====
+
+NAME       TYPE        VALUE  
+---------- ----------- ------ 
+sga_target big integer 11776M 
+
+NAME                 TYPE        VALUE    
+-------------------- ----------- -------- 
+pga_aggregate_limit  big integer 4989M    
+pga_aggregate_target big integer 2004413K 
+
+NAME      TYPE    VALUE 
+--------- ------- ----- 
+cpu_count integer 4     
+
+  COUNT(1)
+----------
+        47
+
+
+TABLESPACE_NAME                FILE_NAME                                                       SIZE_MB    FREE_MB MAX_SIZE_MB MAX_FREE_MB USED_PCT   
+------------------------------ ------------------------------------------------------------ ---------- ---------- ----------- ----------- -----------
+RDSADMIN                       /rdsdbdata/db/ORCL_A/datafile/o1_mf_rdsadmin_hbl47rqz_.dbf            7          0    33554431    33554424  ----------
+SYSAUX                         /rdsdbdata/db/ORCL_A/datafile/o1_mf_sysaux_hbl2z4c6_.dbf            400         43    33554431    33554074  ----------
+SYSTEM                         /rdsdbdata/db/ORCL_A/datafile/o1_mf_system_hbl2z0wo_.dbf            500         32    33554431    33553963  ----------
+TPCCTAB                        /rdsdbdata/db/ORCL_A/datafile/o1_mf_tpcctab_hm2krp0q_.dbf          8056        383    33554431    33546758  ----------
+UNDO_T1                        /rdsdbdata/db/ORCL_A/datafile/o1_mf_undo_t1_hbl2z6sh_.dbf          3570                 102400              ----------
+USERS                          /rdsdbdata/db/ORCL_A/datafile/o1_mf_users_hbl2z7cq_.dbf             100         93    33554431    33554424  ----------
+
+6 rows selected. 
+====
+After  Baseline execution
+====
+
+NAME       TYPE        VALUE  
+---------- ----------- ------ 
+sga_target big integer 11776M 
+NAME                 TYPE        VALUE    
+-------------------- ----------- -------- 
+pga_aggregate_limit  big integer 4989M    
+pga_aggregate_target big integer 2004413K 
+NAME      TYPE    VALUE 
+--------- ------- ----- 
+cpu_count integer 4     
+
+  COUNT(1)
+----------
+        47
+
+
+TABLESPACE_NAME                FILE_NAME                                                       SIZE_MB    FREE_MB MAX_SIZE_MB MAX_FREE_MB USED_PCT   
+------------------------------ ------------------------------------------------------------ ---------- ---------- ----------- ----------- -----------
+RDSADMIN                       /rdsdbdata/db/ORCL_A/datafile/o1_mf_rdsadmin_hbl47rqz_.dbf            7          0    33554431    33554424  ----------
+SYSAUX                         /rdsdbdata/db/ORCL_A/datafile/o1_mf_sysaux_hbl2z4c6_.dbf            400         41    33554431    33554072  ----------
+SYSTEM                         /rdsdbdata/db/ORCL_A/datafile/o1_mf_system_hbl2z0wo_.dbf            500         32    33554431    33553963  ----------
+TPCCTAB                        /rdsdbdata/db/ORCL_A/datafile/o1_mf_tpcctab_hm2krp0q_.dbf          9280        447    33554431    33545598  ----------
+UNDO_T1                        /rdsdbdata/db/ORCL_A/datafile/o1_mf_undo_t1_hbl2z6sh_.dbf          5460                 102400              ----------
+USERS                          /rdsdbdata/db/ORCL_A/datafile/o1_mf_users_hbl2z7cq_.dbf             100         93    33554431    33554424  ----------
+
+6 rows selected. 
+=====
+Before Audit all select
+=====
+
+NAME       TYPE        VALUE  
+---------- ----------- ------ 
+sga_target big integer 11776M 
+NAME                 TYPE        VALUE    
+-------------------- ----------- -------- 
+pga_aggregate_limit  big integer 4989M    
+pga_aggregate_target big integer 2004413K 
+NAME      TYPE    VALUE 
+--------- ------- ----- 
+cpu_count integer 4     
+
+  COUNT(1)
+----------
+        47
+
+
+TABLESPACE_NAME                FILE_NAME                                                            SIZE_MB    FREE_MB MAX_SIZE_MB MAX_FREE_MB USED_PCT   
+------------------------------ ----------------------------------------------------------------- ---------- ---------- ----------- ----------- -----------
+RDSADMIN                       /rdsdbdata/db/HAMMERDB_A/datafile/o1_mf_rdsadmin_hbl47rqz_.dbf             7          0    33554431    33554424  ----------
+SYSAUX                         /rdsdbdata/db/HAMMERDB_A/datafile/o1_mf_sysaux_hbl2z4c6_.dbf             400         54    33554431    33554085  ----------
+SYSTEM                         /rdsdbdata/db/HAMMERDB_A/datafile/o1_mf_system_hbl2z0wo_.dbf             500         39    33554431    33553970  ----------
+TPCCTAB                        /rdsdbdata/db/HAMMERDB_A/datafile/o1_mf_tpcctab_hm2krp0q_.dbf           8048        391    33554431    33546774  ----------
+UNDO_T1                        /rdsdbdata/db/HAMMERDB_A/datafile/o1_mf_undo_t1_hbl2z6sh_.dbf           3570                 102400              ----------
+USERS                          /rdsdbdata/db/HAMMERDB_A/datafile/o1_mf_users_hbl2z7cq_.dbf              100         93    33554431    33554424  ----------
+
+6 rows selected. 
+
+==
+After
+====
+NAME       TYPE        VALUE  
+---------- ----------- ------ 
+sga_target big integer 11776M 
+NAME                 TYPE        VALUE    
+-------------------- ----------- -------- 
+pga_aggregate_limit  big integer 4989M    
+pga_aggregate_target big integer 2004413K 
+NAME      TYPE    VALUE 
+--------- ------- ----- 
+cpu_count integer 4     
+
+  COUNT(1)
+----------
+        47
+
+
+TABLESPACE_NAME                FILE_NAME                                                            SIZE_MB    FREE_MB MAX_SIZE_MB MAX_FREE_MB USED_PCT   
+------------------------------ ----------------------------------------------------------------- ---------- ---------- ----------- ----------- -----------
+RDSADMIN                       /rdsdbdata/db/HAMMERDB_A/datafile/o1_mf_rdsadmin_hbl47rqz_.dbf             7          0    33554431    33554424  ----------
+SYSAUX                         /rdsdbdata/db/HAMMERDB_A/datafile/o1_mf_sysaux_hbl2z4c6_.dbf             400         54    33554431    33554085  ----------
+SYSTEM                         /rdsdbdata/db/HAMMERDB_A/datafile/o1_mf_system_hbl2z0wo_.dbf             500         39    33554431    33553970  ----------
+TPCCTAB                        /rdsdbdata/db/HAMMERDB_A/datafile/o1_mf_tpcctab_hm2krp0q_.dbf           9008        462    33554431    33545885  ----------
+UNDO_T1                        /rdsdbdata/db/HAMMERDB_A/datafile/o1_mf_undo_t1_hbl2z6sh_.dbf           3800          2      102400       98602  ----------
+USERS                          /rdsdbdata/db/HAMMERDB_A/datafile/o1_mf_users_hbl2z7cq_.dbf              100         93    33554431    33554424  ----------
+==========
+

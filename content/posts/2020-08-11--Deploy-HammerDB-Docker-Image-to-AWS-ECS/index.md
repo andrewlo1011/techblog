@@ -20,7 +20,7 @@ docker push andrewlo1011/hammerdb
 ![](./10_push_image_to_docker_hub.jpg)
 
 ## Create ECS Cluster
-__NOTE: We will create AWS resources that could incur costs. It is chargeable, please be aware.__
+__NOTE: We will create AWS resources that incur costs. It is chargeable, please be aware.__
 
 Create an ECS cluster as below:
 

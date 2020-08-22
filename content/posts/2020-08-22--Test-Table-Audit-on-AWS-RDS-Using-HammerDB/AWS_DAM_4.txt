@@ -1,0 +1,205 @@
+======Round 4 - 20000 IPOS =======
+======Before baseline =======
+
+NAME       TYPE        VALUE  
+---------- ----------- ------ 
+sga_target big integer 11776M 
+
+NAME                 TYPE        VALUE    
+-------------------- ----------- -------- 
+pga_aggregate_limit  big integer 4989M    
+pga_aggregate_target big integer 2004413K 
+
+NAME      TYPE    VALUE 
+--------- ------- ----- 
+cpu_count integer 4     
+
+NAME        TYPE   VALUE        
+----------- ------ ------------ 
+audit_trail string DB, EXTENDED 
+
+  COUNT(1)
+----------
+        50
+
+
+TABLESPACE_NAME                FILE_NAME                                                            SIZE_MB    FREE_MB MAX_SIZE_MB MAX_FREE_MB USED_PCT   
+------------------------------ ----------------------------------------------------------------- ---------- ---------- ----------- ----------- -----------
+RDSADMIN                       /rdsdbdata/db/ORCL_A/datafile/o1_mf_rdsadmin_hbl47rqz_.dbf                 7          0    33554431    33554424  ----------
+SYSAUX                         /rdsdbdata/db/ORCL_A/datafile/o1_mf_sysaux_hbl2z4c6_.dbf                 400         47    33554431    33554078  ----------
+SYSTEM                         /rdsdbdata/db/ORCL_A/datafile/o1_mf_system_hbl2z0wo_.dbf                 500         39    33554431    33553970  ----------
+TPCCTAB                        /rdsdbdata/db/ORCL_A/datafile/o1_mf_tpcctab_hm2krp0q_.dbf               8048        391    33554431    33546774  ----------
+UNDO_T1                        /rdsdbdata/db/ORCL_A/datafile/o1_mf_undo_t1_hbl2z6sh_.dbf               3570                 102400              ----------
+USERS                          /rdsdbdata/db/ORCL_A/datafile/o1_mf_users_hbl2z7cq_.dbf                  100         93    33554431    33554424  ----------
+
+6 rows selected. 
+
+
+POLICY_NAME          ENABLED_OPTION  ENTITY_NAME     ENTITY_ SUC FAI
+-------------------- --------------- --------------- ------- --- ---
+ORA_SECURECONFIG     BY USER         ALL USERS       USER    YES YES
+ORA_LOGON_FAILURES   BY USER         ALL USERS       USER    NO  YES
+
+no rows selected
+
+======After baseline =======
+
+NAME       TYPE        VALUE  
+---------- ----------- ------ 
+sga_target big integer 11776M 
+NAME                 TYPE        VALUE    
+-------------------- ----------- -------- 
+pga_aggregate_limit  big integer 4989M    
+pga_aggregate_target big integer 2004413K 
+NAME      TYPE    VALUE 
+--------- ------- ----- 
+cpu_count integer 4     
+NAME        TYPE   VALUE        
+----------- ------ ------------ 
+audit_trail string DB, EXTENDED 
+
+  COUNT(1)
+----------
+        50
+
+
+TABLESPACE_NAME                FILE_NAME                                                            SIZE_MB    FREE_MB MAX_SIZE_MB MAX_FREE_MB USED_PCT   
+------------------------------ ----------------------------------------------------------------- ---------- ---------- ----------- ----------- -----------
+RDSADMIN                       /rdsdbdata/db/ORCL_A/datafile/o1_mf_rdsadmin_hbl47rqz_.dbf                 7          0    33554431    33554424  ----------
+SYSAUX                         /rdsdbdata/db/ORCL_A/datafile/o1_mf_sysaux_hbl2z4c6_.dbf                 400         44    33554431    33554075  ----------
+SYSTEM                         /rdsdbdata/db/ORCL_A/datafile/o1_mf_system_hbl2z0wo_.dbf                 500         39    33554431    33553970  ----------
+TPCCTAB                        /rdsdbdata/db/ORCL_A/datafile/o1_mf_tpcctab_hm2krp0q_.dbf               9336        502    33554431    33545597  ----------
+UNDO_T1                        /rdsdbdata/db/ORCL_A/datafile/o1_mf_undo_t1_hbl2z6sh_.dbf               5830                 102400              ----------
+USERS                          /rdsdbdata/db/ORCL_A/datafile/o1_mf_users_hbl2z7cq_.dbf                  100         93    33554431    33554424  ----------
+
+6 rows selected. 
+
+
+POLICY_NAME          ENABLED_OPTION  ENTITY_NAME     ENTITY_ SUC FAI
+-------------------- --------------- --------------- ------- --- ---
+ORA_SECURECONFIG     BY USER         ALL USERS       USER    YES YES
+ORA_LOGON_FAILURES   BY USER         ALL USERS       USER    NO  YES
+
+no rows selected
+------------------------------ ----------------------------------------------------------------- ---------- ---------- ----------- ----------- -----------
+------------------------------ ----------------------------------------------------------------- ---------- ---------- ----------- ----------- -----------
+======Before Audit ALL =======
+NAME       TYPE        VALUE  
+---------- ----------- ------ 
+sga_target big integer 11776M 
+NAME                 TYPE        VALUE    
+-------------------- ----------- -------- 
+pga_aggregate_limit  big integer 4989M    
+pga_aggregate_target big integer 2004413K 
+NAME      TYPE    VALUE 
+--------- ------- ----- 
+cpu_count integer 4     
+NAME        TYPE   VALUE        
+----------- ------ ------------ 
+audit_trail string DB, EXTENDED 
+
+  COUNT(1)
+----------
+        54
+
+
+TABLESPACE_NAME                FILE_NAME                                                            SIZE_MB    FREE_MB MAX_SIZE_MB MAX_FREE_MB USED_PCT   
+------------------------------ ----------------------------------------------------------------- ---------- ---------- ----------- ----------- -----------
+RDSADMIN                       /rdsdbdata/db/ORCL_A/datafile/o1_mf_rdsadmin_hbl47rqz_.dbf                 7          0    33554431    33554424  ----------
+SYSAUX                         /rdsdbdata/db/ORCL_A/datafile/o1_mf_sysaux_hbl2z4c6_.dbf                 400         44    33554431    33554075  ----------
+SYSTEM                         /rdsdbdata/db/ORCL_A/datafile/o1_mf_system_hbl2z0wo_.dbf                 500         39    33554431    33553970  ----------
+TPCCTAB                        /rdsdbdata/db/ORCL_A/datafile/o1_mf_tpcctab_hm2krp0q_.dbf               9336        502    33554431    33545597  ----------
+UNDO_T1                        /rdsdbdata/db/ORCL_A/datafile/o1_mf_undo_t1_hbl2z6sh_.dbf               5830                 102400              ----------
+USERS                          /rdsdbdata/db/ORCL_A/datafile/o1_mf_users_hbl2z7cq_.dbf                  100         93    33554431    33554424  ----------
+
+6 rows selected. 
+
+
+POLICY_NAME          ENABLED_OPTION  ENTITY_NAME     ENTITY_ SUC FAI
+-------------------- --------------- --------------- ------- --- ---
+ORA_SECURECONFIG     BY USER         ALL USERS       USER    YES YES
+ORA_LOGON_FAILURES   BY USER         ALL USERS       USER    NO  YES
+DML_POLICY           BY USER         ALL USERS       USER    YES YES
+
+======After Audit ALL =======
+NAME       TYPE        VALUE  
+---------- ----------- ------ 
+sga_target big integer 11776M 
+NAME                 TYPE        VALUE    
+-------------------- ----------- -------- 
+pga_aggregate_limit  big integer 4989M    
+pga_aggregate_target big integer 2004413K 
+NAME      TYPE    VALUE 
+--------- ------- ----- 
+cpu_count integer 4     
+NAME        TYPE   VALUE        s
+----------- ------ ------------ 
+audit_trail string DB, EXTENDED 
+
+  COUNT(1)
+----------
+  10021767
+
+
+TABLESPACE_NAME                FILE_NAME                                                            SIZE_MB    FREE_MB MAX_SIZE_MB MAX_FREE_MB USED_PCT   
+------------------------------ ----------------------------------------------------------------- ---------- ---------- ----------- ----------- -----------
+RDSADMIN                       /rdsdbdata/db/ORCL_A/datafile/o1_mf_rdsadmin_hbl47rqz_.dbf                 7          0    33554431    33554424  ----------
+SYSAUX                         /rdsdbdata/db/ORCL_A/datafile/o1_mf_sysaux_hbl2z4c6_.dbf                8648        419    33554431    33546202  ----------
+SYSTEM                         /rdsdbdata/db/ORCL_A/datafile/o1_mf_system_hbl2z0wo_.dbf                 500         39    33554431    33553970  ----------
+TPCCTAB                        /rdsdbdata/db/ORCL_A/datafile/o1_mf_tpcctab_hm2krp0q_.dbf               9502        452    33554431    33545381  ----------
+UNDO_T1                        /rdsdbdata/db/ORCL_A/datafile/o1_mf_undo_t1_hbl2z6sh_.dbf               7150       2174      102400       97424  ----------
+USERS                          /rdsdbdata/db/ORCL_A/datafile/o1_mf_users_hbl2z7cq_.dbf                  100         93    33554431    33554424  ----------
+
+6 rows selected. 
+
+
+POLICY_NAME          ENABLED_OPTION  ENTITY_NAME     ENTITY_ SUC FAI
+-------------------- --------------- --------------- ------- --- ---
+ORA_SECURECONFIG     BY USER         ALL USERS       USER    YES YES
+ORA_LOGON_FAILURES   BY USER         ALL USERS       USER    NO  YES
+DML_POLICY           BY USER         ALL USERS       USER    YES YES
+------------------------------ ----------------------------------------------------------------- ---------- ---------- ----------- ----------- -----------
+------------------------------ ----------------------------------------------------------------- ---------- ---------- ----------- ----------- -----------
+======Before Audit Select =======
+NAME       TYPE        VALUE  
+---------- ----------- ------ 
+sga_target big integer 11776M 
+
+NAME                 TYPE        VALUE    
+-------------------- ----------- -------- 
+pga_aggregate_limit  big integer 4989M    
+pga_aggregate_target big integer 2004413K 
+
+NAME      TYPE    VALUE 
+--------- ------- ----- 
+cpu_count integer 4     
+
+NAME        TYPE   VALUE        
+----------- ------ ------------ 
+audit_trail string DB, EXTENDED 
+
+  COUNT(1)
+----------
+  10021771
+
+
+TABLESPACE_NAME                FILE_NAME                                                            SIZE_MB    FREE_MB MAX_SIZE_MB MAX_FREE_MB USED_PCT   
+------------------------------ ----------------------------------------------------------------- ---------- ---------- ----------- ----------- -----------
+RDSADMIN                       /rdsdbdata/db/ORCL_A/datafile/o1_mf_rdsadmin_hbl47rqz_.dbf                 7          0    33554431    33554424  ----------
+SYSAUX                         /rdsdbdata/db/ORCL_A/datafile/o1_mf_sysaux_hbl2z4c6_.dbf                8648        419    33554431    33546202  ----------
+SYSTEM                         /rdsdbdata/db/ORCL_A/datafile/o1_mf_system_hbl2z0wo_.dbf                 500         39    33554431    33553970  ----------
+TPCCTAB                        /rdsdbdata/db/ORCL_A/datafile/o1_mf_tpcctab_hm2krp0q_.dbf               9502        452    33554431    33545381  ----------
+UNDO_T1                        /rdsdbdata/db/ORCL_A/datafile/o1_mf_undo_t1_hbl2z6sh_.dbf               7150       2174      102400       97424  ----------
+USERS                          /rdsdbdata/db/ORCL_A/datafile/o1_mf_users_hbl2z7cq_.dbf                  100         93    33554431    33554424  ----------
+
+6 rows selected. 
+
+
+POLICY_NAME          ENABLED_OPTION  ENTITY_NAME     ENTITY_ SUC FAI
+-------------------- --------------- --------------- ------- --- ---
+ORA_SECURECONFIG     BY USER         ALL USERS       USER    YES YES
+ORA_LOGON_FAILURES   BY USER         ALL USERS       USER    NO  YES
+DML_POLICY           BY USER         ALL USERS       USER    YES YES
+
+======After Audit Select =======
+

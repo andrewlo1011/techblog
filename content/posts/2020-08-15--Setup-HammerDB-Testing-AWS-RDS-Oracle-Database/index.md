@@ -26,6 +26,8 @@ Pick the CPU type that you like, it can be changed afterward:
 ![](./9_rds_create_database.jpg)
 
 20GB should be large enough.
+
+P.S. 25GB is not enough for build in SELECT Audit test. Need to increase to 50GB at the end.
 ![](./10_rds_create_database.jpg)
 ![](./11_rds_create_database.jpg)
 ![](./12_rds_create_database.jpg)
@@ -45,9 +47,9 @@ Enable Performance insights and enhanced monitoring to collect performance infor
 
 ## Export TPCC schema from the existing HammerDB database
 
-I have an existing HammerDB testing database in my VirtualBox Oracle development VM. It contains a TPCC schema and 60 warehouses. To save time to build the TPCC schema and warehouses in AWS RDS. I decide to export the schema using Oracle datadump export (expdb) and upload the dump to S3. I will import the data to AWS RDS later using datadump import (impdp)
+I have an existing HammerDB testing database in my VirtualBox Oracle development VM. It contains a TPCC schema and 60 warehouses. To save time to build the TPCC schema and warehouses in AWS RDS. I decide to export the schema using Oracle datadump export (expdp) and upload the dump to S3. I will import the data to AWS RDS later using datadump import (impdp)
 
-In the VirtualBox Oracle development VM, execute following commands in sqlplus to create a directory and expdb:
+In the VirtualBox Oracle development VM, execute following commands in sqlplus to create a directory and expdp:
 
 ```
 CREATE DIRECTORY DATA_PUMP_DIR_1 AS '/u01/datapump';
@@ -151,6 +153,6 @@ SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('DATA_PUMP_DIR','tp
 ![](./66_s3_intergration.jpg)
 
 
-The TPCC schema was loaded to the Oracle RDS database and we could use it for HammerDB TPCC test.
+The TPCC schema is loaded to the Oracle RDS database and we could use it for HammerDB TPCC test.
 
-__Remember to terminate the instance when the testing is complete, if the instance is running, AWS will continue to charge you. You could stop the instance, but there will be a certain amount of charges for the storage for the database__
+__Remember to terminate the instance when the testing is complete, if the instance is running, AWS will continue to charge you. You could stop the instance, but there will be a certain amount of charges for the storage for the database.__
